@@ -1,13 +1,15 @@
 #!/usr/bin/env python
-import numpy as np
-import subprocess, re, os, random
+import subprocess, re, random
+
+# this script generates a training set of pacman runs. 
+# it randomly generates a coefficient between -4 and 4 
+# for each feature. 
 
 destfile = "/home/dan/classes/ai/training.txt"
 def runPacman(c):
     "runs pacman with the given constants, returns the score #"
-    cmd = "python pacman.py -l smallClassic -p ExpectimaxAgent -a evalFn=better,a={},b={},c={},d={},e={},f={} -n 1 -q"
-    cmd.format(c[0], c[1], c[2], c[3], c[4], c[5])
-    # output = subprocess.check_output(cmd) 
+    # the coefficients are sent in as additional arguments to the eval
+    # function
     betterArg = "evalFn=better,a={},b={},c={},d={},e={},f={}".format(c[0], c[1], c[2], c[3], c[4], c[5])
     output = subprocess.check_output(["python", "pacman.py", "-l", "smallClassic", "-p", "ExpectimaxAgent", "-a", betterArg, "-n", "10", "-q"])
     # regex = "Pacman emerges victorious! Score: (.+?)\n "
