@@ -12,31 +12,28 @@ def costfunction(X, y, theta):
     return J
 
 def gradient_descent(X, y, theta, alpha, num_iters):
-
+    "runs gradient descent etc. "
     m = y.size
     J_history = zeros(shape=(num_iters, 1))
  
     for i in range(num_iters):
- 
         predictions = X.dot(theta)
- 
         theta_size = theta.size
- 
+
         for it in range(theta_size):
- 
             temp = X[:, it]
             temp.shape = (m, 1)
- 
             errors_x1 = (predictions - y) * temp
- 
             theta[it][0] = theta[it][0] - alpha * (1.0 / m) * errors_x1.sum()
- 
         J_history[i, 0] = costfunction(X, y, theta)
- 
     return theta, J_history
 
-
 def loadTrainingData(degree, filepath):
+    """
+    load the training data into two arrays
+    X is the array of features
+    y is the array (1-dimensional) of outputs 
+    """
     trainingdata = loadtxt(filepath, delimiter=',')
     
     X = trainingdata[:, :degree]
@@ -44,12 +41,11 @@ def loadTrainingData(degree, filepath):
 
     return X, y
 
+# get the training data
 X, y = loadTrainingData(6, os.path.join(os.getcwd(), "training.txt"))
-
 
 m = y.size
 y.shape = (m, 1)
-
 it = ones(shape=(m, 7))
 it[:, 1:7] = X
 
